@@ -53,6 +53,7 @@ RUN pip install --no-cache-dir --no-index --find-links=taiga_python_dependencies
     && rm -R ./taiga_python_dependencies \
     && python manage.py compilemessages
 
+COPY requirements.txt requirements.txt
 COPY local.py settings/local.py
 COPY celery_local.py settings/celery_local.py
 COPY scripts/ /scripts/
