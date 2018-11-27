@@ -1,6 +1,6 @@
 FROM python:3.6-alpine3.6 as BUILDER
 
-ENV TAIGA_VERSION 3.1.3
+ENV TAIGA_VERSION 3.4.5
 
 RUN apk update \
     && apk add --virtual build-dependencies \
@@ -34,8 +34,8 @@ RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 # FINAL IMAGE
 FROM python:3.6-alpine3.6
 
-LABEL maintainer="douglasmirandasilva@gmail.com"
-LABEL taiga_version="tag:3.1.3"
+LABEL maintainer="thramposo@gmail.com"
+LABEL taiga_version="tag:3.4.5"
 
 WORKDIR /taiga_backend
 
