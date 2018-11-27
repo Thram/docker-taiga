@@ -164,6 +164,22 @@ GITHUB_API_CLIENT_SECRET = env('GITHUB_API_CLIENT_SECRET')
 # settings in settings/celery.py and settings/celery-local.py
 CELERY_ENABLED = True
 
+# Async
+# see celery_local.py
+RABBITMQ_USER = env('RABBITMQ_USER',  default='taiga')
+RABBITMQ_PASSWORD = env('RABBITMQ_PASSWORD',  default='taiga')
+RABBITMQ_VHOST = env('RABBITMQ_VHOST',  default='taiga')
+RABBITMQ_HOST = env('RABBITMQ_HOST',  default='rabbitmq')
+RABBITMQ_PORT = env('RABBITMQ_PORT',  default=5672)
+RABBITMQ_URL = "amqp://{}:{}@{}:{}/{}".format(
+    RABBITMQ_USER,
+    RABBITMQ_PASSWORD,
+    RABBITMQ_HOST,
+    RABBITMQ_PORT,
+    RABBITMQ_VHOST)
+EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
+EVENTS_PUSH_BACKEND_OPTIONS = {"url": RABBITMQ_URL}
+
 
 #########################################
 # IMPORTERS
