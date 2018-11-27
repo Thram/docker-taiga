@@ -1,9 +1,9 @@
 FROM nginx:1.13-alpine
 
-LABEL maintainer="douglasmirandasilva@gmail.com"
-LABEL taiga_version="tag:3.4.5-stable"
+LABEL maintainer="thramposo@gmail.com"
+LABEL taiga_version="tag:3.4.6-stable"
 
-ENV TAIGA_VERSION 3.4.5-stable
+ENV TAIGA_VERSION 3.4.6-stable
 
 COPY nginx/ /etc/nginx/conf.d/
 # Entrypoint
