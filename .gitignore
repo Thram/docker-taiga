@@ -15,4 +15,3 @@ __pycache__/
 tmp/*
 production.env
 productionenv
-taiga.template.yml
