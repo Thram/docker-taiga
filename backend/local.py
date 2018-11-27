@@ -73,3 +73,10 @@ if env('USE_ANYMAIL', cast=bool, default=False):
 #         "LOCATION": "unique-snowflake"
 #     }
 # }
+
+# Importers
+IMPORTERS["trello"] = {
+    "active": True,
+    "api_key": env('TRELLO_API_KEY'),
+    "secret_key": env('TRELLO_OAUTH_SECRET')
+}
