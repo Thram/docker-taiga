@@ -19,6 +19,7 @@ if [ ! -f /taiga_frontend/conf.json ]; then
     "defaultLanguage": $DEFAULT_LANGUAGE,
     "themes": ["taiga"],
     "defaultTheme": "taiga",
+    "importers": ["trello"],
     "publicRegisterEnabled": ${TAIGA_PUBLIC_REGISTER_ENABLED:-true},
     "feedbackEnabled": true,
     "privacyPolicyUrl": null,
