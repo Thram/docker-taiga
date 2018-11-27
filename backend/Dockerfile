@@ -6,6 +6,7 @@ RUN apk update \
     && apk add --virtual build-dependencies \
     # Essentials
     gcc musl-dev libressl-dev \
+    git \
     # Postgres python client (psycopg2) build dependency
     postgresql-dev \
     # Pillow / PIL build dependencies
