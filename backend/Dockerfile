@@ -43,6 +43,7 @@ WORKDIR /taiga_backend
 COPY --from=BUILDER /taiga_backend ./
 
 RUN apk add --no-cache \
+    git \
     # Pillow / PIL
     freetype jpeg libwebp tiff libpng lcms2 openjpeg zlib libxslt libxml2 libffi \
     # Postgres python client
