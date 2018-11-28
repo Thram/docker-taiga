@@ -8,6 +8,9 @@ if [ ! -f /taiga_frontend/conf.json ]; then
     API_URL=${API_URL:-\"/api/v1/\"}
     DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-\"en\"}
     EVENTS_URL=${EVENTS_URL:-null}
+    IMPORTERS=${IMPORTERS:-null}
+    PUBLIC_REGISTER_ENABLED=${PUBLIC_REGISTER_ENABLED:-true}
+    if [[ $IMPORTERS != null ]]; then IMPORTERS="[$IMPORTERS]"; fi
     cat > /taiga_frontend/conf.json <<EOF
 {
     "api": $API_URL,
@@ -19,8 +22,8 @@ if [ ! -f /taiga_frontend/conf.json ]; then
     "defaultLanguage": $DEFAULT_LANGUAGE,
     "themes": ["taiga"],
     "defaultTheme": "taiga",
-    "importers": ["trello"],
-    "publicRegisterEnabled": ${PUBLIC_REGISTER_ENABLED:-true},
+    "importers": $IMPORTERS,
+    "publicRegisterEnabled": $PUBLIC_REGISTER_ENABLED,
     "feedbackEnabled": true,
     "privacyPolicyUrl": null,
     "termsOfServiceUrl": null,

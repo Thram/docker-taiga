@@ -60,7 +60,7 @@ EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
 EVENTS_PUSH_BACKEND_OPTIONS = {"url": BROKER_URL}
 
 # see celery_local.py
-CELERY_ENABLED = True
+CELERY_ENABLED = False
 
 # Mail settings
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default="john@doe.com")

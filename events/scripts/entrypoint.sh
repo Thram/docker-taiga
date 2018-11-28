@@ -6,9 +6,7 @@ if [ ! -f /taiga_events/config.json ]; then
 {
     "url": "amqp://$RABBITMQ_DEFAULT_USER:$RABBITMQ_DEFAULT_PASS@rabbitmq:5672/$RABBITMQ_DEFAULT_VHOST",
     "secret": "$DJANGO_SECRET_KEY",
-    "webSocketServer": {
-        "port": 8888
-    }
+    "webSocketServer": { "port": 8888 }
 }
 
 EOF
