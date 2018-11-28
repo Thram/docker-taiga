@@ -414,8 +414,7 @@ objects:
                     secretKeyRef:
                       key: django-secret-key
                       name: django
-              image: >-
-                172.30.1.1:5000/taiga-template/events@sha256:7a87409bddd12548fdf1c01d93f39d2d1dc297188d34315b780102417cbe2673
+              image: docker-registry.default.svc:5000/taiga/events:latest
               name: events
               resources: {}
               ports:
@@ -440,7 +439,7 @@ objects:
                     secretKeyRef:
                       key: django-secret-key
                       name: django
-              image: DOCKER_REGISTRY_URL/NAMESPACE/frontend:latest
+              image: docker-registry.default.svc:5000/taiga/frontend:latest
               name: frontend
               ports:
                 - containerPort: 80

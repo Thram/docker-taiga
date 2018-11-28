@@ -43,8 +43,8 @@ SITES = {
 
 SITE_ID = "api"
 
-MEDIA_URL = "{}://{}/media/".format(_HTTP, TAIGA_HOSTNAME)
-STATIC_URL = "{}://{}/static/".format(_HTTP, TAIGA_HOSTNAME)
+MEDIA_URL = f"{_HTTP}://{TAIGA_HOSTNAME}/media/"
+STATIC_URL = f"{_HTTP}://{TAIGA_HOSTNAME}/static/"
 MEDIA_ROOT = '/taiga_backend/media'
 STATIC_ROOT = '/taiga_backend/static-root'
 
@@ -64,7 +64,7 @@ if env('USE_ANYMAIL', cast=bool, default=False):
         "MAILGUN_API_KEY": env('ANYMAIL_MAILGUN_API_KEY'),
     }
     EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
-    DEFAULT_FROM_EMAIL = "Taiga <{}>".format(env('DJANGO_DEFAULT_FROM_EMAIL'))
+    DEFAULT_FROM_EMAIL = f"Taiga <{env('DJANGO_DEFAULT_FROM_EMAIL')}>"
 
 # Cache
 # CACHES = {

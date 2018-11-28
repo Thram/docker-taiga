@@ -8,14 +8,29 @@ import environ
 
 env = environ.Env()
 
+CONFIG = {
+    'POSTGRES_DB': env('POSTGRES_DB', default='taiga'),
+    'POSTGRES_USER': env('POSTGRES_USER', default='taiga'),
+    'POSTGRES_PASSWORD': env('POSTGRES_PASSWORD', default='taiga'),
+    'POSTGRES_HOST': env('POSTGRES_HOST', default='postgresql'),
+    'POSTGRES_PORT': env('POSTGRES_PORT', default=5432),
+    'LIMIT_RETRIES': env('DB_CHECK_LIMIT_RETRIES', cast=int, default=5),
+    'SLEEP_INTERVAL': env('DB_CHECK_SLEEP_INTERVAL', cast=float, default=5),
+}
+
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 logging.info("Checking if table 'django_migrations' exists.")
 logging.info("If you want to skip this, just set the environment var")
 logging.info(
     "SKIP_DB_CHECK=True on docker-compose.yml on <backend> service.")
-CONNECTION_STRING = f"dbname='{env('POSTGRES_DB')}' user='{env('POSTGRES_USER')}' host='{env('POSTGRES_HOST')}' port='{env('POSTGRES_PORT')}' password='{env('POSTGRES_PASSWORD')}'"
-LIMIT_RETRIES = env('DB_CHECK_LIMIT_RETRIES', cast=int, default=5)
-SLEEP_INTERVAL = env('DB_CHECK_SLEEP_INTERVAL', cast=float, default=5)
+POSTGRES_DB = CONFIG['POSTGRES_DB']
+POSTGRES_USER = CONFIG['POSTGRES_USER']
+POSTGRES_PASSWORD = CONFIG['POSTGRES_PASSWORD']
+POSTGRES_HOST = CONFIG['POSTGRES_HOST']
+POSTGRES_PORT = CONFIG['POSTGRES_PORT']
+CONNECTION_STRING = f"dbname='{POSTGRES_DB}' user='{POSTGRES_USER}' host='{POSTGRES_HOST}' port='{POSTGRES_PORT}' password='{POSTGRES_PASSWORD}'"
+LIMIT_RETRIES = CONFIG['LIMIT_RETRIES']
+SLEEP_INTERVAL = CONFIG['SLEEP_INTERVAL']
 
 
 def postgres_connection(connection_string, retry_counter=1):
