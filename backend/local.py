@@ -3,6 +3,7 @@
 from .common import *
 import environ
 
+print("Setup init")
 
 env = environ.Env()
 DEBUG = env('DJANGO_DEBUG', cast=bool, default=False)
@@ -50,22 +51,32 @@ STATIC_ROOT = '/taiga_backend/static-root'
 
 # Async
 # see celery_local.py
+RABBITMQ_DEFAULT_USER = env('RABBITMQ_DEFAULT_USER', default='taiga')
+RABBITMQ_DEFAULT_PASS = env('RABBITMQ_DEFAULT_PASS', default='taiga')
+RABBITMQ_DEFAULT_VHOST = env('RABBITMQ_DEFAULT_VHOST', default='taiga')
 # BROKER_URL = 'amqp://taiga:taiga@rabbitmq:5672/taiga'
 EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
-EVENTS_PUSH_BACKEND_OPTIONS = {"url": "amqp://taiga:taiga@rabbitmq:5672/taiga"}
+EVENTS_PUSH_BACKEND_OPTIONS = {
+    "url": "amqp://{}:{}@rabbitmq:5672/{}".format(
+        RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST)
+}
 
 # see celery_local.py
 CELERY_ENABLED = True
 
 # Mail settings
-# if env('USE_ANYMAIL', cast=bool, default=False):
-#     INSTALLED_APPS += ['anymail']
-#     ANYMAIL = {
-#         "MAILGUN_API_KEY": env('ANYMAIL_MAILGUN_API_KEY'),
-#     }
-#     EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
-#     DEFAULT_FROM_EMAIL = "Taiga <{}>".format(env('DJANGO_DEFAULT_FROM_EMAIL'))
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default="john@doe.com")
+# CHANGE_NOTIFICATIONS_MIN_INTERVAL = 300 #seconds
 
+# EMAIL SETTINGS EXAMPLE
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = env('EMAIL_USE_TLS', defaulft=True)
+# You cannot use both (TLS and SSL) at the same time!
+EMAIL_USE_SSL = env('EMAIL_USE_SSL', defaulft=False)
+EMAIL_HOST = env('EMAIL_HOST', defaulft='smtp.gmail.com')
+EMAIL_PORT = env('EMAIL_PORT', defaulft=587)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', defaulft='youremail@gmail.com')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', defaulft='yourpassword')
 # Cache
 # CACHES = {
 #     "default": {
