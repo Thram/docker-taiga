@@ -30,13 +30,6 @@ objects:
       name: django
     data:
       django-secret-key: bXktZGphbmdvLXNlY3JldC1rZXktdGFpZ2E=
-  - kind: Secret
-  - kind: Secret
-    apiVersion: v1
-    metadata:
-      name: redis
-    data:
-      redis-password: bXktcmVkaXMtcGFzc3dvcmQtdGFpZ2E=
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
@@ -316,6 +309,21 @@ objects:
                     secretKeyRef:
                       key: database-password
                       name: postgresql
+                - name: RABBITMQ_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-password
+                      name: rabbit
+                - name: RABBITMQ_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-user
+                      name: rabbit
+                - name: RABBITMQ_VHOST
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-vhost
+                      name: rabbit
               image: docker-registry.default.svc:5000/taiga/backend:latest
               name: celeryworker
               resources: {}
@@ -370,10 +378,21 @@ objects:
                     secretKeyRef:
                       key: database-password
                       name: postgresql
-                - name: HOSTNAME
-                  value: localhost
-                - name: SSL_ENABLED
-                  value: True
+                - name: RABBITMQ_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-password
+                      name: rabbit
+                - name: RABBITMQ_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-user
+                      name: rabbit
+                - name: RABBITMQ_VHOST
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-vhost
+                      name: rabbit
               image: docker-registry.default.svc:5000/taiga/backend:latest
               name: backend
               ports:
