@@ -86,12 +86,9 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
 # }
 
 # Importers
-IMPORTERS = {
-    "trello": {
-        "active": env('IMPORTER_TRELLO_ENABLED', cast=bool, default=False),
-        "api_key": env('TRELLO_API_KEY', default=''),
-        "secret_key": env('TRELLO_OAUTH_SECRET', default='')
-    }
+IMPORTERS["trello"] = {
+    "active": env('IMPORTER_TRELLO_ENABLED', cast=bool, default=False),
+    "api_key": env('TRELLO_API_KEY', default=''),
+    "secret_key": env('TRELLO_OAUTH_SECRET', default='')
 }
-
 print("Setup finished")
