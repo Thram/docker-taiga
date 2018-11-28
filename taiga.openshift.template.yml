@@ -324,7 +324,7 @@ objects:
                     secretKeyRef:
                       key: rabbit-vhost
                       name: rabbit
-              image: docker-registry.default.svc:5000/taiga/backend:latest
+              image: docker-registry.default.svc:5000/company-management/backend:latest
               name: celeryworker
               resources: {}
               volumeMounts:
@@ -393,7 +393,7 @@ objects:
                     secretKeyRef:
                       key: rabbit-vhost
                       name: rabbit
-              image: docker-registry.default.svc:5000/taiga/backend:latest
+              image: docker-registry.default.svc:5000/company-management/backend:latest
               name: backend
               ports:
                 - containerPort: 8000
@@ -429,7 +429,7 @@ objects:
                     secretKeyRef:
                       key: django-secret-key
                       name: django
-              image: docker-registry.default.svc:5000/taiga/events:latest
+              image: docker-registry.default.svc:5000/company-management/events:latest
               name: events
               resources: {}
               ports:
@@ -454,7 +454,7 @@ objects:
                     secretKeyRef:
                       key: django-secret-key
                       name: django
-              image: docker-registry.default.svc:5000/taiga/frontend:latest
+              image: docker-registry.default.svc:5000/company-management/frontend:latest
               name: frontend
               ports:
                 - containerPort: 80

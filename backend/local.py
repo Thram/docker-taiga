@@ -54,12 +54,10 @@ STATIC_ROOT = '/taiga_backend/static-root'
 RABBITMQ_DEFAULT_USER = env('RABBITMQ_DEFAULT_USER', default='taiga')
 RABBITMQ_DEFAULT_PASS = env('RABBITMQ_DEFAULT_PASS', default='taiga')
 RABBITMQ_DEFAULT_VHOST = env('RABBITMQ_DEFAULT_VHOST', default='taiga')
-# BROKER_URL = 'amqp://taiga:taiga@rabbitmq:5672/taiga'
+BROKER_URL = "amqp://{}:{}@rabbitmq:5672/{}".format(
+    RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST)
 EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
-EVENTS_PUSH_BACKEND_OPTIONS = {
-    "url": "amqp://{}:{}@rabbitmq:5672/{}".format(
-        RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST)
-}
+EVENTS_PUSH_BACKEND_OPTIONS = {"url": BROKER_URL}
 
 # see celery_local.py
 CELERY_ENABLED = True
