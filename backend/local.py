@@ -146,7 +146,7 @@ STATIC_ROOT = '/taiga_backend/static-root'
 #########################################
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = CONFIG['EMAIL_FROM_DEFAULT']
+DEFAULT_FROM_EMAIL = CONFIG['DEFAULT_FROM_EMAIL']
 EMAIL_USE_TLS = CONFIG['EMAIL_USE_TLS']
 # You cannot use both (TLS and SSL) at the same time!
 EMAIL_USE_SSL = CONFIG['EMAIL_USE_SSL']
