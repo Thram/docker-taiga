@@ -70,13 +70,13 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default="john@doe.com")
 
 # EMAIL SETTINGS EXAMPLE
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = env('EMAIL_USE_TLS', defaulft=True)
+EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=True)
 # You cannot use both (TLS and SSL) at the same time!
-EMAIL_USE_SSL = env('EMAIL_USE_SSL', defaulft=False)
-EMAIL_HOST = env('EMAIL_HOST', defaulft='smtp.gmail.com')
-EMAIL_PORT = env('EMAIL_PORT', defaulft=587)
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', defaulft='youremail@gmail.com')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', defaulft='yourpassword')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=False)
+EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = env('EMAIL_PORT', default=587)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='youremail@gmail.com')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='yourpassword')
 # Cache
 # CACHES = {
 #     "default": {
