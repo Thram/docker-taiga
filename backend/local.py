@@ -110,9 +110,9 @@ SITES = {
 
 SITE_ID = "api"
 
-TAIGA_URL = f"{_HTTP}://{TAIGA_HOSTNAME}"
-MEDIA_URL = f"{TAIGA_URL}/media/"
-STATIC_URL = f"{TAIGA_URL}/static/"
+TAIGA_URL = "{}://{}".format(_HTTP, TAIGA_HOSTNAME)
+MEDIA_URL = "{}/media/".format(TAIGA_URL)
+STATIC_URL = "{}/static/".format(TAIGA_URL)
 MEDIA_ROOT = '/taiga_backend/media'
 STATIC_ROOT = '/taiga_backend/static-root'
 
@@ -219,7 +219,8 @@ RABBITMQ_PASSWORD = CONFIG['RABBITMQ_PASSWORD']
 RABBITMQ_VHOST = CONFIG['RABBITMQ_VHOST']
 RABBITMQ_HOST = CONFIG['RABBITMQ_HOST']
 RABBITMQ_PORT = CONFIG['RABBITMQ_PORT']
-RABBITMQ_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_HOST}:{RABBITMQ_PORT}/{RABBITMQ_VHOST}"
+RABBITMQ_URL = "amqp://{}:{}@{}:{}/{}".format(
+    RABBITMQ_USER, RABBITMQ_PASSWORD, RABBITMQ_HOST, RABBITMQ_PORT, RABBITMQ_VHOST)
 EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
 EVENTS_PUSH_BACKEND_OPTIONS = {"url": RABBITMQ_URL}
 
@@ -258,7 +259,7 @@ IMPORTERS["jira"] = {
 # Remember to enable it in the front client too.
 IMPORTERS["asana"] = {
     "active": CONFIG['IMPORTER_ASANA_ENABLED'],
-    "callback_url": f"{FRONT_SCHEME}://{FRONT_DOMAIN}/project/new/import/asana",
+    "callback_url": "{}://{}/project/new/import/asana".format(FRONT_SCHEME, FRONT_DOMAIN),
     "app_id": CONFIG['ASANA_APP_ID'],
     "app_secret": CONFIG['ASANA_APP_SECRET'],
 }

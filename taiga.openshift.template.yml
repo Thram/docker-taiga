@@ -316,10 +316,6 @@ objects:
                     secretKeyRef:
                       key: database-password
                       name: postgresql
-                - name: HOSTNAME
-                  value: localhost
-                - name: SSL_ENABLED
-                  value: True
               image: docker-registry.default.svc:5000/taiga/backend:latest
               name: celeryworker
               resources: {}
