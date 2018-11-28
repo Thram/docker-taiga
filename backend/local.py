@@ -3,7 +3,7 @@
 from .common import *
 import environ
 
-print("Setup init")
+print("Setup local.py init")
 
 env = environ.Env()
 DEBUG = env('DJANGO_DEBUG', cast=bool, default=False)
@@ -91,4 +91,4 @@ IMPORTERS["trello"] = {
     "api_key": env('TRELLO_API_KEY', default=''),
     "secret_key": env('TRELLO_OAUTH_SECRET', default='')
 }
-print("Setup finished")
+print("Setup local.py finished")
