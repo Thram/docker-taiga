@@ -8,30 +8,14 @@ import environ
 
 env = environ.Env()
 
-CONFIG = {
-    'POSTGRES_DB': env('POSTGRES_DB', default='taiga'),
-    'POSTGRES_USER': env('POSTGRES_USER', default='taiga'),
-    'POSTGRES_PASSWORD': env('POSTGRES_PASSWORD', default='taiga'),
-    'POSTGRES_HOST': env('POSTGRES_HOST', default='postgresql'),
-    'POSTGRES_PORT': env('POSTGRES_PORT', default='5432'),
-    'LIMIT_RETRIES': env('DB_CHECK_LIMIT_RETRIES', cast=int, default=5),
-    'SLEEP_INTERVAL': env('DB_CHECK_SLEEP_INTERVAL', cast=float, default=5),
-}
-
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 logging.info("Checking if table 'django_migrations' exists.")
 logging.info("If you want to skip this, just set the environment var")
 logging.info(
-    "SKIP_DB_CHECK=True on docker-compose.yml on <backend> service.")
-POSTGRES_DB = CONFIG['POSTGRES_DB']
-POSTGRES_USER = CONFIG['POSTGRES_USER']
-POSTGRES_PASSWORD = CONFIG['POSTGRES_PASSWORD']
-POSTGRES_HOST = CONFIG['POSTGRES_HOST']
-POSTGRES_PORT = CONFIG['POSTGRES_PORT']
-CONNECTION_STRING = "dbname='{}' user='{}' host='{}' port='{}' password='{}'".format(
-    POSTGRES_DB, POSTGRES_USER, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_PASSWORD)
-LIMIT_RETRIES = CONFIG['LIMIT_RETRIES']
-SLEEP_INTERVAL = CONFIG['SLEEP_INTERVAL']
+    "TAIGA_SKIP_DB_CHECK=True on docker-compose.yml on <backend> service.")
+CONNECTION_STRING = f"dbname='{env('DJANGO_DB_NAME')}' user='{env('DJANGO_DB_USER')}' host='postgresql' password='{env('DJANGO_DB_PASSWORD')}'"
+LIMIT_RETRIES = env('TAIGA_DB_CHECK_LIMIT_RETRIES', cast=int, default=5)
+SLEEP_INTERVAL = env('TAIGA_DB_CHECK_SLEEP_INTERVAL', cast=float, default=5)
 
 
 def postgres_connection(connection_string, retry_counter=1):
@@ -43,7 +27,7 @@ def postgres_connection(connection_string, retry_counter=1):
             logging.error("Check your connection settings.")
             logging.error("Or increase (in docker-compose.yml):")
             logging.error(
-                "DB_CHECK_SLEEP_INTERVAL / DB_CHECK_LIMIT_RETRIES."
+                "TAIGA_DB_CHECK_SLEEP_INTERVAL / TAIGA_DB_CHECK_LIMIT_RETRIES."
             )
             logging.error("Exception messsage: {e}")
             sys.exit(1)
@@ -65,3 +49,5 @@ if not cursor.fetchone()[0]:
     logging.info("service for taiga. Will try to:")
     logging.info("1) migrate DB; 2) load initial data; 3) compilemessages")
     print('missing_django_migrations')
+
+print("Database checks finished")
