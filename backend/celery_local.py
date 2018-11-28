@@ -8,9 +8,9 @@ CONFIG = {
     'RABBITMQ_PASSWORD': env('RABBITMQ_PASSWORD',  default='taiga'),
     'RABBITMQ_VHOST': env('RABBITMQ_VHOST',  default='taiga'),
     'RABBITMQ_HOST': env('RABBITMQ_HOST',  default='rabbitmq'),
-    'RABBITMQ_PORT': env('RABBITMQ_PORT',  default=5672),
+    'RABBITMQ_PORT': env('RABBITMQ_PORT',  default='5672'),
     'REDIS_HOST': env('REDIS_HOST',  default='redis'),
-    'REDIS_PORT': env('REDIS_PORT',  default=6379),
+    'REDIS_PORT': env('REDIS_PORT',  default='6379'),
 }
 
 RABBITMQ_USER = CONFIG['RABBITMQ_USER']

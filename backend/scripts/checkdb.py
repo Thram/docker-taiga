@@ -13,7 +13,7 @@ CONFIG = {
     'POSTGRES_USER': env('POSTGRES_USER', default='taiga'),
     'POSTGRES_PASSWORD': env('POSTGRES_PASSWORD', default='taiga'),
     'POSTGRES_HOST': env('POSTGRES_HOST', default='postgresql'),
-    'POSTGRES_PORT': env('POSTGRES_PORT', default=5432),
+    'POSTGRES_PORT': env('POSTGRES_PORT', default='5432'),
     'LIMIT_RETRIES': env('DB_CHECK_LIMIT_RETRIES', cast=int, default=5),
     'SLEEP_INTERVAL': env('DB_CHECK_SLEEP_INTERVAL', cast=float, default=5),
 }

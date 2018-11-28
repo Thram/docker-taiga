@@ -1,0 +1,6 @@
+projectKey=marketing-site
+serverUrl=https://sonarqube.typay.co.nz
+serverVersion=7.1.0.11001
+dashboardUrl=https://sonarqube.typay.co.nz/dashboard/index/marketing-site
+ceTaskId=AWdX-GKb52FXLU5OsHla
+ceTaskUrl=https://sonarqube.typay.co.nz/api/ce/task?id=AWdX-GKb52FXLU5OsHla
