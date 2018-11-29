@@ -429,6 +429,21 @@ objects:
                     secretKeyRef:
                       key: django-secret-key
                       name: django
+                - name: RABBITMQ_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-password
+                      name: rabbit
+                - name: RABBITMQ_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-user
+                      name: rabbit
+                - name: RABBITMQ_VHOST
+                  valueFrom:
+                    secretKeyRef:
+                      key: rabbit-vhost
+                      name: rabbit
               image: docker-registry.default.svc:5000/company-management/events:latest
               name: events
               resources: {}
