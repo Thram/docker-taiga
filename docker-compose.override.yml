@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 # This docker file is loaded automatically when you run:
 #  docker-compose up
 # I'm using to load local / debug configs.
@@ -10,7 +10,7 @@ services:
       # management panel
       # When accessing http://localhost:8081 for the first time,
       # the default user and password its the same as:
-      # RABBITMQ_DEFAULT_USER and RABBITMQ_DEFAULT_PASS
+      # RABBITMQ_USER and RABBITMQ_PASS
       - "8081:15672"
 
   backend:
@@ -23,4 +23,16 @@ services:
       - TAIGA_EVENTS_URL="ws://localhost/events"
 
   celeryworker:
-    command: ['celery', '-A', 'taiga', 'worker', '-P', 'gevent', '-c', '4', '--loglevel', 'debug']
+    command:
+      [
+        "celery",
+        "-A",
+        "taiga",
+        "worker",
+        "-P",
+        "gevent",
+        "-c",
+        "4",
+        "--loglevel",
+        "debug",
+      ]

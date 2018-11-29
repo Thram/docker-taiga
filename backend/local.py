@@ -51,16 +51,16 @@ STATIC_ROOT = '/taiga_backend/static-root'
 
 # Async
 # see celery_local.py
-RABBITMQ_DEFAULT_USER = env('RABBITMQ_DEFAULT_USER', default='taiga')
-RABBITMQ_DEFAULT_PASS = env('RABBITMQ_DEFAULT_PASS', default='taiga')
-RABBITMQ_DEFAULT_VHOST = env('RABBITMQ_DEFAULT_VHOST', default='taiga')
+RABBITMQ_USER = env('RABBITMQ_USER', default='taiga')
+RABBITMQ_PASSWORD = env('RABBITMQ_PASSWORD', default='taiga')
+RABBITMQ_VHOST = env('RABBITMQ_VHOST', default='taiga')
 BROKER_URL = "amqp://{}:{}@rabbitmq:5672/{}".format(
-    RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST)
+    RABBITMQ_USER, RABBITMQ_PASSWORD, RABBITMQ_VHOST)
 EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
 EVENTS_PUSH_BACKEND_OPTIONS = {"url": BROKER_URL}
 
 # see celery_local.py
-CELERY_ENABLED = False
+CELERY_ENABLED = True
 
 # Mail settings
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default="john@doe.com")
@@ -83,10 +83,33 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
 #     }
 # }
 
-# Importers
+#########################################
+# IMPORTERS
+# Remember to enable it in the front client
+# too using the $IMPORTERS variable like $IMPORTERS="'trello', 'github'"
+#########################################
+
+IMPORTERS["github"] = {
+    "active": env('IMPORTER_GITHUB_ENABLED', cast=bool, default=False),
+    "client_id": env('GITHUB_CLIENT_ID', default=''),
+    "client_secret": env('GITHUB_CLIENT_SECRET', default=''),
+}
 IMPORTERS["trello"] = {
     "active": env('IMPORTER_TRELLO_ENABLED', cast=bool, default=False),
     "api_key": env('TRELLO_API_KEY', default=''),
     "secret_key": env('TRELLO_OAUTH_SECRET', default='')
+}
+IMPORTERS["jira"] = {
+    "active": env('IMPORTER_JIRA_ENABLED', cast=bool, default=False),
+    "consumer_key": env('JIRA_CONSUMER_KEY', default=''),
+    "cert": env('JIRA_CERT', default=''),
+    "pub_cert": env('JIRA_PUB_CERT', default=''),
+}
+IMPORTERS["asana"] = {
+    "active": env('IMPORTER_ASANA_ENABLED', cast=bool, default=False),
+    "callback_url": "{}://{}/project/new/import/asana".format(SITES["front"]["scheme"],
+                                                              SITES["front"]["domain"]),
+    "app_id": env('ASANA_APP_ID', default=''),
+    "app_secret": env('ASANA_APP_SECRET', default=''),
 }
 print("Setup local.py finished")
