@@ -15,12 +15,12 @@ services:
 
   backend:
     environment:
-      - DJANGO_DEBUG=True
+      - DEBUG=True
 
   frontend:
     environment:
-      - TAIGA_DEBUG=true
-      - TAIGA_EVENTS_URL="ws://localhost/events"
+      - DEBUG=true
+      - EVENTS_URL="ws://localhost/events"
 
   celeryworker:
     command:

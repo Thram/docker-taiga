@@ -6,7 +6,7 @@ import environ
 print("Setup local.py init")
 
 env = environ.Env()
-DEBUG = env('DJANGO_DEBUG', cast=bool, default=False)
+DEBUG = env('DEBUG', cast=bool, default=False)
 PUBLIC_REGISTER_ENABLED = env(
     'PUBLIC_REGISTER_ENABLED', cast=bool, default=True
 )
