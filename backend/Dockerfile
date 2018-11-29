@@ -19,18 +19,11 @@ ADD https://github.com/taigaio/taiga-back/archive/${TAIGA_VERSION}.tar.gz ./
 RUN tar -xzf ${TAIGA_VERSION}.tar.gz -C ./ taiga-back-${TAIGA_VERSION} --strip-components=1
 RUN rm ${TAIGA_VERSION}.tar.gz
 
-# Don't want pip to use git, so I'm replacing with pypi.  
-RUN sed -i 's,git+https://github.com/Xof/django-pglocks.git,django-pglocks==1.0.2,g' requirements.txt
-
 # local.py and checkdb.py and celery
 # using gevent to run taiga gunicorn (workers)
 # using gevent on celery (workers)
-RUN echo "django-environ==0.4.0" >> requirements.txt
-RUN echo "gevent==1.1.2" >> requirements.txt
-RUN echo "django-anymail==0.5" >> requirements.txt
-
+COPY requirements.txt requirements.txt
 RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
-
 
 # FINAL IMAGE
 FROM python:3.6-alpine3.6
@@ -55,7 +48,6 @@ RUN pip install --no-cache-dir --no-index --find-links=taiga_python_dependencies
     && rm -R ./taiga_python_dependencies \
     && python manage.py compilemessages
 
-COPY requirements.txt requirements.txt
 COPY local.py settings/local.py
 COPY celery_local.py settings/celery_local.py
 COPY scripts/ /scripts/
