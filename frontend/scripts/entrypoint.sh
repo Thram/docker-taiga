@@ -7,12 +7,10 @@ if [ ! -f /taiga_frontend/conf.json ]; then
     echo "Generating /taiga_frontend/conf.json file..."
     API_URL=${API_URL:-/api/v1/}
     DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
-    EVENTS_URL=${EVENTS_URL:-localhost}
+    EVENTS_URL=${EVENTS_URL:-null}
     IMPORTERS=${IMPORTERS:-null}
     PUBLIC_REGISTER_ENABLED=${PUBLIC_REGISTER_ENABLED:-true}
     if [[ $IMPORTERS != null ]]; then IMPORTERS="[$IMPORTERS]"; fi
-    echo IMPORTERS
-    echo API_URL
     cat > /taiga_frontend/conf.json <<EOF
 {
     "api": "$API_URL",
