@@ -25,9 +25,9 @@ services:
     environment:
       # https://www.rabbitmq.com/clustering.html#erlang-cookie
       - RABBITMQ_ERLANG_COOKIE='secret_cookie_here'
-      - RABBITMQ_USER=taiga
-      - RABBITMQ_PASSWORD=taiga
-      - RABBITMQ_VHOST=taiga
+      - RABBITMQ_DEFAULT_USER=taiga
+      - RABBITMQ_DEFAULT_PASS=taiga
+      - RABBITMQ_DEFAULT_VHOST=taiga
       # http://www.rabbitmq.com/configure.html#config-items
       # - RABBITMQ_HIPE_COMPILE=1
 
@@ -66,9 +66,9 @@ services:
     volumes_from:
       - backend:ro
     environment:
-      - RABBITMQ_USER=taiga
-      - RABBITMQ_PASSWORD=taiga
-      - RABBITMQ_VHOST=taiga
+      - RABBITMQ_DEFAULT_USER=taiga
+      - RABBITMQ_DEFAULT_PASS=taiga
+      - RABBITMQ_DEFAULT_VHOST=taiga
     # Must be in lowercase, because we are using in a json file (conf.json)
     #   - TAIGA_DEBUG=true
     #   - TAIGA_API_URL="http://example.com/api/v1/"
@@ -112,8 +112,8 @@ services:
     environment:
       # SAME AS DJANGO_SECRET_KEY
       - DJANGO_SECRET_KEY=DJANGO_SECRET_KEY
-      - RABBITMQ_USER=taiga
-      - RABBITMQ_PASSWORD=taiga
-      - RABBITMQ_VHOST=taiga
+      - RABBITMQ_DEFAULT_USER=taiga
+      - RABBITMQ_DEFAULT_PASS=taiga
+      - RABBITMQ_DEFAULT_VHOST=taiga
     depends_on:
       - rabbitmq
