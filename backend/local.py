@@ -67,7 +67,8 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default="john@doe.com")
 # CHANGE_NOTIFICATIONS_MIN_INTERVAL = 300 #seconds
 
 # EMAIL SETTINGS EXAMPLE
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "djmail.backends.async.EmailBackend"
+DJMAIL_REAL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=False)
 # You cannot use both (TLS and SSL) at the same time!
 EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=False)

@@ -11,7 +11,6 @@ RABBITMQ_VHOST = env('RABBITMQ_VHOST', default='taiga')
 
 broker_url = 'amqp://{}:{}@rabbitmq:5672/{}'.format(
     RABBITMQ_USER, RABBITMQ_PASSWORD, RABBITMQ_VHOST)
-print(broker_url)
 result_backend = 'redis://redis:6379/0'
 timezone = 'Pacific/Auckland'
 
