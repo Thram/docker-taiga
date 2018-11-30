@@ -57,7 +57,7 @@ services:
       # - DEFAULT_FROM_EMAIL=example@example.com
     user: taiga
     entrypoint: ["/scripts/entrypoint.sh"]
-    # command: ['gunicorn', '--worker-class', 'gevent', '--workers', '10', '-b', '0.0.0.0:8000', 'taiga.wsgi']
+    # command: ['gunicorn', '--worker-class', 'eventlet', '--workers', '10', '-b', '0.0.0.0:8000', 'taiga.wsgi']
     command: ["gunicorn", "-b", "0.0.0.0:8000", "taiga.wsgi"]
 
   frontend:
@@ -96,7 +96,7 @@ services:
         "taiga",
         "worker",
         "-P",
-        "gevent",
+        "eventlet",
         "-c",
         "4",
         "--loglevel",

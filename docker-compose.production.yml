@@ -21,7 +21,7 @@ services:
       [
         "gunicorn",
         "--worker-class",
-        "gevent",
+        "eventlet",
         "--workers",
         "4",
         "-b",
@@ -39,7 +39,7 @@ services:
     restart: always
     env_file: production.env
     # Maybe you want to increase the workers, see <celeryworker> in docker-compose.yml
-    # command: ['celery', '-A', 'taiga', 'worker', '-P', 'gevent', '-c', '4', '--loglevel', 'info']
+    # command: ['celery', '-A', 'taiga', 'worker', '-P', 'eventlet', '-c', '4', '--loglevel', 'info']
 
   events:
     restart: always

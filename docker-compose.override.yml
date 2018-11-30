@@ -30,7 +30,7 @@ services:
         "taiga",
         "worker",
         "-P",
-        "gevent",
+        "eventlet",
         "-c",
         "4",
         "--loglevel",

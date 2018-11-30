@@ -20,8 +20,8 @@ RUN tar -xzf ${TAIGA_VERSION}.tar.gz -C ./ taiga-back-${TAIGA_VERSION} --strip-c
 RUN rm ${TAIGA_VERSION}.tar.gz
 
 # local.py and checkdb.py and celery
-# using gevent to run taiga gunicorn (workers)
-# using gevent on celery (workers)
+# using eventlet to run taiga gunicorn (workers)
+# using eventlet on celery (workers)
 COPY requirements.txt requirements.txt
 RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 
