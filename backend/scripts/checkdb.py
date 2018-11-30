@@ -5,14 +5,13 @@ import logging
 import psycopg2
 import environ
 
-
 env = environ.Env()
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 logging.info("Checking if table 'django_migrations' exists.")
 logging.info("If you want to skip this, just set the environment var")
 logging.info(
-    "TAIGA_SKIP_DB_CHECK=True on docker-compose.yml on <backend> service.")
+    "SKIP_DB_CHECK=True on docker-compose.yml on <backend> service.")
 
 POSTGRES_DB = env('POSTGRES_DB', default='taiga'),
 POSTGRES_USER = env('POSTGRES_USER', default='taiga'),
@@ -20,8 +19,8 @@ POSTGRES_PASSWORD = env('POSTGRES_PASSWORD', default='taiga'),
 POSTGRES_HOST = env('POSTGRES_HOST', default='postgresql'),
 CONNECTION_STRING = "host={} dbname='{}' user='{}' password='{}'".format(
     POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD)
-LIMIT_RETRIES = env('TAIGA_DB_CHECK_LIMIT_RETRIES', cast=int, default=5)
-SLEEP_INTERVAL = env('TAIGA_DB_CHECK_SLEEP_INTERVAL', cast=float, default=5)
+LIMIT_RETRIES = env('DB_CHECK_LIMIT_RETRIES', cast=int, default=5)
+SLEEP_INTERVAL = env('DB_CHECK_SLEEP_INTERVAL', cast=float, default=5)
 
 
 def postgres_connection(connection_string, retry_counter=1):
@@ -33,7 +32,7 @@ def postgres_connection(connection_string, retry_counter=1):
             logging.error("Check your connection settings.")
             logging.error("Or increase (in docker-compose.yml):")
             logging.error(
-                "TAIGA_DB_CHECK_SLEEP_INTERVAL / TAIGA_DB_CHECK_LIMIT_RETRIES."
+                "DB_CHECK_SLEEP_INTERVAL / DB_CHECK_LIMIT_RETRIES."
             )
             logging.error("Exception messsage: {e}")
             sys.exit(1)

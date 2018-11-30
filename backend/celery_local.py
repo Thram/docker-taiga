@@ -1,5 +1,8 @@
 from .celery import *
 import environ
+import gevent.monkey
+
+gevent.monkey.patch_all()
 
 print("Setup celery_local.py init")
 
