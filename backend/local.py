@@ -11,8 +11,8 @@ PUBLIC_REGISTER_ENABLED = env(
     'PUBLIC_REGISTER_ENABLED', cast=bool, default=True
 )
 
-SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', cast=list, default=['*'])
+DJANGO_SECRET_KEY = env('SECRET_KEY')
+DJANGO_ALLOWED_HOSTS = env('ALLOWED_HOSTS', cast=list, default=['*'])
 
 DATABASES = {
     'default': {
