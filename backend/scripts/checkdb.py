@@ -13,10 +13,10 @@ logging.info("If you want to skip this, just set the environment var")
 logging.info(
     "SKIP_DB_CHECK=True on docker-compose.yml on <backend> service.")
 
-POSTGRES_DB = env('POSTGRES_DB', default='taiga'),
-POSTGRES_USER = env('POSTGRES_USER', default='taiga'),
-POSTGRES_PASSWORD = env('POSTGRES_PASSWORD', default='taiga'),
-POSTGRES_HOST = env('POSTGRES_HOST', default='postgresql'),
+POSTGRES_DB = env('POSTGRES_DB', default='taiga')
+POSTGRES_USER = env('POSTGRES_USER', default='taiga')
+POSTGRES_PASSWORD = env('POSTGRES_PASSWORD', default='taiga')
+POSTGRES_HOST = env('POSTGRES_HOST', default='postgresql')
 CONNECTION_STRING = "host={} dbname='{}' user='{}' password='{}'".format(
     POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD)
 LIMIT_RETRIES = env('DB_CHECK_LIMIT_RETRIES', cast=int, default=5)

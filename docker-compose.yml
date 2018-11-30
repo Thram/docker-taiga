@@ -64,10 +64,7 @@ services:
     build: frontend/
     volumes_from:
       - backend:ro
-    environment:
-      - RABBITMQ_DEFAULT_USER=taiga
-      - RABBITMQ_DEFAULT_PASS=taiga
-      - RABBITMQ_DEFAULT_VHOST=taiga
+    # environment:
     # Must be in lowercase, because we are using in a json file (conf.json)
     #   - DEBUG=true
     #   - API_URL="http://example.com/api/v1/"
