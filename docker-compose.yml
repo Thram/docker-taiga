@@ -1,10 +1,10 @@
 version: "2"
 
 volumes:
-  postgres_data: {}
-  postgres_backup: {}
-  taiga_backend_media: {}
-
+  ? postgres_data
+  ? postgres_backup
+  ? media
+  ? data
 services:
   postgresql:
     image: postgres:10-alpine
@@ -34,8 +34,8 @@ services:
   backend:
     build: backend/
     volumes:
-      - taiga_backend_media:/taiga_backend/media
-      - /taiga_backend/static-root
+      - media:/taiga_backend/media
+      - data:/taiga_backend/static-root
     environment:
       # - DEBUG=True
       - SECRET_KEY=SECRET_KEY
@@ -62,8 +62,9 @@ services:
 
   frontend:
     build: frontend/
-    volumes_from:
-      - backend:ro
+    volumes:
+      - media:/taiga_frontend/media
+      - data:/taiga_frontend/static-root
     # environment:
     # Must be in lowercase, because we are using in a json file (conf.json)
     #   - DEBUG=true
