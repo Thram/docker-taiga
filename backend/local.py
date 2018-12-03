@@ -71,8 +71,13 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default="john@doe.com")
 # Mail settings
 if env('USE_ANYMAIL', cast=bool, default=False):
     INSTALLED_APPS += ['anymail']
-    EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
-    ANYMAIL = { "MAILGUN_API_KEY": env('MAILGUN_API_KEY') }
+    ANYMAIL = {};
+    EMAIL_BACKEND = env('ANYMAIL_EMAIL_BACKEND')
+    if env('MAILGUN_API_KEY'):
+        ANYMAIL["MAILGUN_API_KEY"] = env('MAILGUN_API_KEY')
+    if env('MAILJET_API_KEY') and env('MAILJET_SECRET_KEY'):
+        ANYMAIL["MAILJET_API_KEY"] = env('MAILJET_API_KEY')
+        ANYMAIL["MAILJET_SECRET_KEY"] = env('MAILJET_SECRET_KEY')
 else: 
     EMAIL_BACKEND = "djmail.backends.async.EmailBackend"
     DJMAIL_REAL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
