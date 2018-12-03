@@ -45,4 +45,4 @@ webcolors==1.7
 django-environ==0.4.0
 gevent==1.2.2
 eventlet==0.24.1
-django-anymail==0.5
+django-anymail[mailgun,mailjet]==5.0
