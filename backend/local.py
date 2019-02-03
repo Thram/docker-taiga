@@ -78,6 +78,7 @@ if env('USE_ANYMAIL', cast=bool, default=False):
     if ANYMAIL_PROVIDER == 'mailjet':
         ANYMAIL["MAILJET_API_KEY"] = env('MAILJET_API_KEY')
         ANYMAIL["MAILJET_SECRET_KEY"] = env('MAILJET_SECRET_KEY')
+        ANYMAIL["MAILJET_API_URL"] = env('ANYMAIL_PROVIDER', default='https://api.mailjet.com/v3')
     if ANYMAIL_PROVIDER == 'mailgun':
         ANYMAIL["MAILGUN_API_KEY"] = env('MAILGUN_API_KEY')
 else: 
