@@ -2,6 +2,10 @@ FROM python:3.6-alpine3.6 as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
+# Cleanup cache
+RUN rm -rf /var/cache/apk/* && \
+    rm -rf /tmp/*
+
 RUN apk update \
     && apk add --virtual build-dependencies \
     # Essentials
