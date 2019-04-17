@@ -3,8 +3,8 @@ FROM python:3.6-alpine3.6 as BUILDER
 ENV TAIGA_VERSION 3.4.5
 
 # Cleanup cache
-RUN rm -rf /var/cache/apk/* && \
-    rm -rf /tmp/*
+RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.6/main > /etc/apk/repositories; \
+    echo http://mirror.yandex.ru/mirrors/alpine/v3.6/community >> /etc/apk/repositories
 
 RUN apk update
 
