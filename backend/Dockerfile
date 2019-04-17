@@ -6,8 +6,9 @@ ENV TAIGA_VERSION 3.4.5
 RUN rm -rf /var/cache/apk/* && \
     rm -rf /tmp/*
 
-RUN apk update \
-    && apk add --virtual build-dependencies \
+RUN apk update
+
+RUN apk add --virtual build-dependencies \
     # Essentials
     gcc musl-dev libressl-dev \
     git \
