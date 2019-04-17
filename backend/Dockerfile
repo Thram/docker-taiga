@@ -1,14 +1,9 @@
-FROM python:3.6-alpine3.6 as BUILDER
+FROM python:3.6-alpine as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
-# Cleanup cache
-RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.6/main > /etc/apk/repositories; \
-    echo http://mirror.yandex.ru/mirrors/alpine/v3.6/community >> /etc/apk/repositories
-
-RUN apk update
-
-RUN apk add --virtual build-dependencies \
+RUN apk update \ 
+    apk add --virtual build-dependencies \
     # Essentials
     gcc musl-dev libressl-dev \
     git \
@@ -31,7 +26,7 @@ COPY requirements.txt requirements.txt
 RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 
 # FINAL IMAGE
-FROM python:3.6-alpine3.6
+FROM python:3.6-alpine
 
 LABEL maintainer="thramposo@gmail.com"
 LABEL taiga_version="tag:3.4.5"
