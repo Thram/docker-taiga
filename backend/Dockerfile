@@ -3,7 +3,7 @@ FROM python:3.6.8-slim-jessie as BUILDER
 ENV TAIGA_VERSION 3.4.5
 
 RUN apt-get update \
-    && apt-get install --virtual build-dependencies \
+    && apt-get build-dep \
     # Essentials
     gcc musl-dev libressl-dev \
     # Postgres python client (psycopg2) build dependency
