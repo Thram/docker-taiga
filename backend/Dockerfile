@@ -1,18 +1,18 @@
-FROM frolvlad/alpine-python3 as BUILDER
+Backend
+```
+FROM ubuntu:xenial as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
-RUN apk update \
-    && apk add --virtual build-dependencies \
-    # Essentials
-    gcc musl-dev libressl-dev \
-    # Postgres python client (psycopg2) build dependency
-    postgresql-dev \
-    # Pillow / PIL build dependencies
-    freetype-dev jpeg-dev libwebp-dev tiff-dev libpng-dev lcms2-dev \
-    openjpeg-dev zlib-dev libxslt-dev libxml2-dev libffi-dev \
-    # Other tools
-    git
+RUN apt-get update \
+    && apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-dev \
+	libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev \
+   postgresql-dev \
+    automake libtool curl git tmux gettext \
+    python3 python3-pip python3-dev virtualenvwrapper \
+    libxml2-dev libxslt-dev \
+    libssl-dev libffi-dev
+
 
 WORKDIR /taiga_backend
 
@@ -34,7 +34,7 @@ RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 
 
 # FINAL IMAGE
-FROM frolvlad/alpine-python3
+FROM ubuntu:xenial
 
 LABEL maintainer="thramposo@gmail.com"
 LABEL taiga_version="tag:3.4.5"
@@ -43,16 +43,13 @@ WORKDIR /taiga_backend
 
 COPY --from=BUILDER /taiga_backend ./
 
-RUN apk add --no-cache \
-    # Pillow / PIL
-    freetype jpeg libwebp tiff libpng lcms2 openjpeg zlib libxslt libxml2 libffi \
-    # Postgres python client
-    libpq \
-    # Needed for localization stuff: python manage.py compilemessages
-    gettext \
-    # Other tools
-    git
-
+RUN apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-dev \
+	libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev \
+   postgresql-dev \
+    automake libtool curl git tmux gettext \
+    python3 python3-pip python3-dev virtualenvwrapper \
+    libxml2-dev libxslt-dev \
+    libssl-dev libffi-dev
 RUN pip install --no-cache-dir --no-index --find-links=taiga_python_dependencies -r requirements.txt \
     && rm -R ./taiga_python_dependencies \
     && python manage.py compilemessages
@@ -68,3 +65,4 @@ RUN mkdir /taiga_backend/media && mkdir /taiga_backend/static-root \
     && chmod +x /scripts/entrypoint.sh
 
 USER taiga
+```
