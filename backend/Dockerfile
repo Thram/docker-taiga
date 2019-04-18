@@ -1,9 +1,9 @@
-FROM python:3.6.8-slim-jessie as BUILDER
+FROM frolvlad/alpine-python3 as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
-RUN apt-get update \
-    && apt-get build-dep \
+RUN apk update \
+    && apk add --virtual build-dependencies \
     # Essentials
     gcc musl-dev libressl-dev \
     # Postgres python client (psycopg2) build dependency
@@ -34,7 +34,7 @@ RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 
 
 # FINAL IMAGE
-FROM python:3.6.8-slim-jessie
+FROM frolvlad/alpine-python3
 
 LABEL maintainer="thramposo@gmail.com"
 LABEL taiga_version="tag:3.4.5"
@@ -43,7 +43,7 @@ WORKDIR /taiga_backend
 
 COPY --from=BUILDER /taiga_backend ./
 
-RUN apt-get install --no-cache \
+RUN apk add --no-cache \
     # Pillow / PIL
     freetype jpeg libwebp tiff libpng lcms2 openjpeg zlib libxslt libxml2 libffi \
     # Postgres python client
