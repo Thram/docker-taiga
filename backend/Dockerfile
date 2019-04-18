@@ -5,7 +5,7 @@ ENV TAIGA_VERSION 3.4.5
 RUN apt-get update \
     && apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-dev \
 	libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev \
-   postgresql-dev \
+    postgresql-9.5 postgresql-contrib-9.5 \
     automake libtool curl git tmux gettext \
     python3 python3-pip python3-dev virtualenvwrapper \
     libxml2-dev libxslt-dev \
