@@ -1,16 +1,18 @@
-FROM ubuntu:xenial as BUILDER
+FROM python:3.6-alpine3.6 as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
-RUN apt-get update \
-    && apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-dev \
-	libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev \
-    postgresql-9.5 postgresql-contrib-9.5 \
-    automake libtool curl git tmux gettext \
-    python3 python3-pip python3-dev virtualenvwrapper \
-    libxml2-dev libxslt-dev \
-    libssl-dev libffi-dev
-
+RUN apk update \
+    && apk add --virtual build-dependencies \
+    # Essentials
+    gcc musl-dev libressl-dev \
+    # Postgres python client (psycopg2) build dependency
+    postgresql-dev \
+    # Pillow / PIL build dependencies
+    freetype-dev jpeg-dev libwebp-dev tiff-dev libpng-dev lcms2-dev \
+    openjpeg-dev zlib-dev libxslt-dev libxml2-dev libffi-dev \
+    # Other tools
+    git
 
 WORKDIR /taiga_backend
 
@@ -32,7 +34,7 @@ RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 
 
 # FINAL IMAGE
-FROM ubuntu:xenial
+FROM python:3.6-alpine3.6
 
 LABEL maintainer="thramposo@gmail.com"
 LABEL taiga_version="tag:3.4.5"
@@ -41,13 +43,16 @@ WORKDIR /taiga_backend
 
 COPY --from=BUILDER /taiga_backend ./
 
-RUN apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-dev \
-	libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev \
-   postgresql-dev \
-    automake libtool curl git tmux gettext \
-    python3 python3-pip python3-dev virtualenvwrapper \
-    libxml2-dev libxslt-dev \
-    libssl-dev libffi-dev
+RUN apk add --no-cache \
+    # Pillow / PIL
+    freetype jpeg libwebp tiff libpng lcms2 openjpeg zlib libxslt libxml2 libffi \
+    # Postgres python client
+    libpq \
+    # Needed for localization stuff: python manage.py compilemessages
+    gettext \
+    # Other tools
+    git
+
 RUN pip install --no-cache-dir --no-index --find-links=taiga_python_dependencies -r requirements.txt \
     && rm -R ./taiga_python_dependencies \
     && python manage.py compilemessages
