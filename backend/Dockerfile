@@ -1,5 +1,3 @@
-Backend
-```
 FROM ubuntu:xenial as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
@@ -65,4 +63,3 @@ RUN mkdir /taiga_backend/media && mkdir /taiga_backend/static-root \
     && chmod +x /scripts/entrypoint.sh
 
 USER taiga
-```
