@@ -2,8 +2,8 @@ FROM python:3.6.8-slim-jessie as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
-RUN apk update \
-    && apk add --virtual build-dependencies \
+RUN apt-get update \
+    && apt-get install --virtual build-dependencies \
     # Essentials
     gcc musl-dev libressl-dev \
     # Postgres python client (psycopg2) build dependency
@@ -43,7 +43,7 @@ WORKDIR /taiga_backend
 
 COPY --from=BUILDER /taiga_backend ./
 
-RUN apk add --no-cache \
+RUN apt-get install --no-cache \
     # Pillow / PIL
     freetype jpeg libwebp tiff libpng lcms2 openjpeg zlib libxslt libxml2 libffi \
     # Postgres python client
