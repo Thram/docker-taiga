@@ -1,4 +1,4 @@
-FROM python:3.6.8-alpine3.9 as BUILDER
+FROM python:3.6.8-slim-jessie as BUILDER
 
 ENV TAIGA_VERSION 3.4.5
 
@@ -34,7 +34,7 @@ RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
 
 
 # FINAL IMAGE
-FROM python:3.6.8-alpine3.9
+FROM python:3.6.8-slim-jessie
 
 LABEL maintainer="thramposo@gmail.com"
 LABEL taiga_version="tag:3.4.5"
