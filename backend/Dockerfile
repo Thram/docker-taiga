@@ -6,13 +6,12 @@ RUN apk update \
     && apk add --virtual build-dependencies \
     # Essentials
     gcc musl-dev libressl-dev \
+    git \
     # Postgres python client (psycopg2) build dependency
     postgresql-dev \
     # Pillow / PIL build dependencies
     freetype-dev jpeg-dev libwebp-dev tiff-dev libpng-dev lcms2-dev \
-    openjpeg-dev zlib-dev libxslt-dev libxml2-dev libffi-dev \
-    # Other tools
-    git
+    openjpeg-dev zlib-dev libxslt-dev libxml2-dev libffi-dev
 
 WORKDIR /taiga_backend
 
@@ -20,18 +19,11 @@ ADD https://github.com/taigaio/taiga-back/archive/${TAIGA_VERSION}.tar.gz ./
 RUN tar -xzf ${TAIGA_VERSION}.tar.gz -C ./ taiga-back-${TAIGA_VERSION} --strip-components=1
 RUN rm ${TAIGA_VERSION}.tar.gz
 
-# Don't want pip to use git, so I'm replacing with pypi.  
-RUN sed -i 's,git+https://github.com/Xof/django-pglocks.git,django-pglocks==1.0.2,g' requirements.txt
-
 # local.py and checkdb.py and celery
-# using gevent to run taiga gunicorn (workers)
-# using gevent on celery (workers)
-RUN echo "django-environ==0.4.0" >> requirements.txt
-RUN echo "gevent==1.1.2" >> requirements.txt
-RUN echo "django-anymail==0.5" >> requirements.txt
-
+# using eventlet to run taiga gunicorn (workers)
+# using eventlet on celery (workers)
+COPY requirements.txt requirements.txt
 RUN pip wheel --wheel-dir=./taiga_python_dependencies -r requirements.txt
-
 
 # FINAL IMAGE
 FROM python:3.6-alpine3.6
@@ -44,14 +36,13 @@ WORKDIR /taiga_backend
 COPY --from=BUILDER /taiga_backend ./
 
 RUN apk add --no-cache \
+    git \
     # Pillow / PIL
     freetype jpeg libwebp tiff libpng lcms2 openjpeg zlib libxslt libxml2 libffi \
     # Postgres python client
     libpq \
     # Needed for localization stuff: python manage.py compilemessages
-    gettext \
-    # Other tools
-    git
+    gettext
 
 RUN pip install --no-cache-dir --no-index --find-links=taiga_python_dependencies -r requirements.txt \
     && rm -R ./taiga_python_dependencies \
